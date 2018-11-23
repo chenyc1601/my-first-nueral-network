@@ -2,7 +2,9 @@
 
 from neural-network import NeuralNetwork
 
-if __name__ == "__main__":
+if __name__ == "__main__" :
+    # 
+
     # number of input, hidden and output nodes
     inputNodes = 28 * 28  # 28*28 pixels  
     hiddenNodes = 3
@@ -15,4 +17,5 @@ if __name__ == "__main__":
     n = NeuralNetwork(inputNodes, hiddenNodes, outputNodes, learningRate)
     # test n.query()
     ## print(n.query([1.0, 0.5, -1.5]))
+
     pass

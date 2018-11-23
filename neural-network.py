@@ -36,6 +36,8 @@ class NeuralNetwork :
 
     # train the neural network
     def train(self, inputsList, targetsList) :
+        """
+        """
         # convert lists to 2d arrays
         inputs = np.array(inputsList, ndmin=2).T
         targets = np.array(targetsList, ndmin=2).T
@@ -58,6 +60,8 @@ class NeuralNetwork :
 
     # query the neural network
     def query(self, inputsList) :
+        """
+        """
         # convert inputs list to 2d array
         inputs = np.array(inputsList, ndmin=2).T
 
