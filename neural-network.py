@@ -35,7 +35,25 @@ class NeuralNetwork :
         return
 
     # train the neural network
-    def train(self) :
+    def train(self, inputsList, targetsList) :
+        # convert lists to 2d arrays
+        inputs = np.array(inputsList, ndmin=2).T
+        targets = np.array(targetsList, ndmin=2).T
+
+        hiddenInputs = np.dot(self.w_I_H_n, inputs)
+        hiddenOutputs = self.activation_function(hiddenInputs)
+
+        finalInputs = np.dot(self.w_H_O_n, hiddenOutputs)
+        finalOutputs = self.activation_function(finalInputs)
+
+        # calculate errors
+        outputErrors = targets - finalOutputs
+        hiddenErrors = np.dot(self.w_H_O_n.T, outputErrors)
+
+        # update the weights for the links between layers
+        self.w_H_O_n += self.lr * np.dot(outputErrors * finalOutputs * (1.0 - finalOutputs), hiddenOutputs.T)
+        self.w_I_H_n += self.lr * np.dot(hiddenErrors * hiddenOutputs * (1.0 - hiddenOutputs), inputs.T)
+
         return
 
     # query the neural network
