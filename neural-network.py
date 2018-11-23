@@ -81,5 +81,6 @@ if __name__ == "__main__":
 
     # create instance of neural network
     n = NeuralNetwork(inputNodes, hiddenNodes, outputNodes, learningRate)
+    # test
     print(n.query([1.0, 0.5, -1.5]))
     pass
