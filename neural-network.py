@@ -68,19 +68,3 @@ class NeuralNetwork :
         finalOutputs = self.activation_function(finalInputs)
 
         return finalOutputs
-
-
-if __name__ == "__main__":
-    # number of input, hidden and output nodes
-    inputNodes = 3
-    hiddenNodes = 3
-    outputNodes = 3
-
-    # learning rate is 0.5
-    learningRate = 0.5
-
-    # create instance of neural network
-    n = NeuralNetwork(inputNodes, hiddenNodes, outputNodes, learningRate)
-    # test
-    print(n.query([1.0, 0.5, -1.5]))
-    pass
