@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-import scipy as sp
+from scipy import special
 
 # neural network class definition
 class NeuralNetwork :
@@ -30,7 +30,7 @@ class NeuralNetwork :
         self.w_H_O_n = np.random.normal(0.0, pow(self.hnodes, -0.5), (self.onodes, self.hnodes))
 
         # activation function is the sigmoid function
-        self.activation_function = lambda x: sp.special.expit(x)
+        self.activation_function = lambda x: special.expit(x)
 
         return
 
@@ -63,4 +63,5 @@ if __name__ == "__main__":
 
     # create instance of neural network
     n = NeuralNetwork(inputNodes, hiddenNodes, outputNodes, learningRate)
+    print(n.query([1.0, 0.5, -1.5]))
     pass
