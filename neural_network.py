@@ -6,38 +6,36 @@ from scipy import special
 # neural network class definition
 class NeuralNetwork :
 
-    #initialise the neural network
     def __init__(self, inputnodes, hiddennodes, outputnodes, learningrate) :
+        """根据输入的参数初始化神经网络
         """
-        """
-        # set number of nodes in each input, hidden, output layer
+        # 各层结点数
         self.inodes = inputnodes
         self.hnodes = hiddennodes
         self.onodes = outputnodes
 
-        # learning rate
+        # 学习率
         self.lr = learningrate
 
-        # link weight matrices, w_I_H and w_H_O
-        # weight inside the arrays are w_i_j, where link is from node i to node j in the next layer
+        # 链接权重矩阵
+        # 权重w_i_j是上层结点i到下层结点j的权重，即：
         # w_1_1 w_2_1
-        # w_1_2 w_2_2 etc
-        # weights randomly range from -0.5 to +0.5
+        # w_1_2 w_2_2 ...
+        ## weights randomly range from -0.5 to +0.5
         ## self.w_I_H_r = np.random.rand(self.hnodes, self.inodes) - 0.5  
         ## self.w_H_O_r = np.random.rand(self.onodes, self.hnodes) - 0.5
-        ## weights 正态分布，均值为0，标准差为1/传入链接数目的开方
+        # weights 正态分布，均值为0，标准差为1/传入链接数目的开方
         self.w_I_H_n = np.random.normal(0.0, pow(self.inodes, -0.5), (self.hnodes, self.inodes))
         self.w_H_O_n = np.random.normal(0.0, pow(self.hnodes, -0.5), (self.onodes, self.hnodes))
 
-        # activation function is the sigmoid function
+        # 使用sigmoid函数作为结点的激发函数
         self.activation_function = lambda x: special.expit(x)
 
         return
 
 
-    # query the neural network
     def query(self, aInput) :
-        """
+        """输入一个数据，返回最终输出矩阵<ndarray>
         """
         # convert inputs list to 2d array
         inputs = np.array(aInput, ndmin=2).T
@@ -51,9 +49,8 @@ class NeuralNetwork :
         return finalOutputs
 
 
-    # train the neural network
     def train(self, aInput, aTarget) :
-        """
+        """输入一个数据，对神经网络进行一次训练
         """
         # convert inputs list to 2d array
         inputs = np.array(aInput, ndmin=2).T
@@ -64,12 +61,12 @@ class NeuralNetwork :
         finalInputs = np.dot(self.w_H_O_n, hiddenOutputs)
         finalOutputs = self.activation_function(finalInputs)
 
-        # calculate errors
+        # 计算误差
         targets = np.array(aTarget, ndmin=2).T
         outputErrors = targets - finalOutputs
         hiddenErrors = np.dot(self.w_H_O_n.T, outputErrors)
 
-        # update the weights for the links between layers
+        # 调整权重
         self.w_H_O_n += self.lr * np.dot(outputErrors * finalOutputs * (1.0 - finalOutputs), hiddenOutputs.T)
         self.w_I_H_n += self.lr * np.dot(hiddenErrors * hiddenOutputs * (1.0 - hiddenOutputs), inputs.T)
 
@@ -77,9 +74,11 @@ class NeuralNetwork :
 
 
     def test(self, aInput, aTarget) :
+        """输入一个数据，返回计算结果和目标结果<int>
         """
-        """
-        finalOutputs = self.query(aInput)
-
-        # 
-        return
+        finalOutputList = self.query(aInput).tolist()
+        ouDigi = finalOutputList.index(max(finalOutputList))
+        targetList = aTarget.tolist()
+        tarDigi = targetList.index(max(targetList))
+        
+        return [ouDigi, tarDigi]
