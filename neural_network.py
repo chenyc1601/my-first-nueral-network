@@ -34,13 +34,29 @@ class NeuralNetwork :
 
         return
 
+
+    # query the neural network
+    def query(self, aInput) :
+        """
+        """
+        # convert inputs list to 2d array
+        inputs = np.array(aInput, ndmin=2).T
+
+        hiddenInputs = np.dot(self.w_I_H_n, inputs)
+        hiddenOutputs = self.activation_function(hiddenInputs)
+
+        finalInputs = np.dot(self.w_H_O_n, hiddenOutputs)
+        finalOutputs = self.activation_function(finalInputs)
+
+        return finalOutputs
+
+
     # train the neural network
     def train(self, aInput, aTarget) :
         """
         """
-        # convert lists to 2d arrays
+        # convert inputs list to 2d array
         inputs = np.array(aInput, ndmin=2).T
-        targets = np.array(aTarget, ndmin=2).T
 
         hiddenInputs = np.dot(self.w_I_H_n, inputs)
         hiddenOutputs = self.activation_function(hiddenInputs)
@@ -49,6 +65,7 @@ class NeuralNetwork :
         finalOutputs = self.activation_function(finalInputs)
 
         # calculate errors
+        targets = np.array(aTarget, ndmin=2).T
         outputErrors = targets - finalOutputs
         hiddenErrors = np.dot(self.w_H_O_n.T, outputErrors)
 
@@ -58,17 +75,11 @@ class NeuralNetwork :
 
         return
 
-    # query the neural network
-    def query(self, inputsList) :
+
+    def test(self, aInput, aTarget) :
         """
         """
-        # convert inputs list to 2d array
-        inputs = np.array(inputsList, ndmin=2).T
+        finalOutputs = self.query(aInput)
 
-        hiddenInputs = np.dot(self.w_I_H_n, inputs)
-        hiddenOutputs = self.activation_function(hiddenInputs)
-
-        finalInputs = np.dot(self.w_H_O_n, hiddenOutputs)
-        finalOutputs = self.activation_function(finalInputs)
-
-        return finalOutputs
+        # 
+        return

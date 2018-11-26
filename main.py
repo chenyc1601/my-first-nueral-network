@@ -4,25 +4,29 @@ from dataset import Dataset
 from neural_network import NeuralNetwork
 
 if __name__ == "__main__" :
-    # dataset path
-    dataPath = "mnist_dataset/mnist_train_1-100.csv"
+    # 数据集路径
+    trainFilePath = "mnist_dataset/mnist_train_1-100.csv"
+    testFilePath = "mnist_dataset/mnist_test_1-10.csv"
 
-    # number of input, hidden and output nodes
-    inputNodes = 28 * 28  # 28*28 pixels  
+    # 输入层，中间层和输出层的节点数
+    inputNodes = 28 * 28  # 28*28像素  
     hiddenNodes = 100
-    outputNodes = 10  # 10 digits
+    outputNodes = 10  # 0-9十个数字
 
-    # learning rate is 0.5
+    # 学习率
     learningRate = 0.5
 
-    # read dataset
-    data = Dataset(dataPath)
-    inputList = data.read_inputs()
-    targetList = data.read_targets()
+    # 读取和预处理数据集
+    trainSet = Dataset(trainFilePath)
 
-    # create and train neural network
+    # 建立并训练网络
     n = NeuralNetwork(inputNodes, hiddenNodes, outputNodes, learningRate)
-    for i in inputList :
+    for data in trainSet.dataList :
+        n.train(data.input, data.target)
+
+    # 测试
+    for data in testSet.dataList :
+        n.test(data.input, data.target)
 
     # test n.query()
     ## print(n.query([1.0, 0.5, -1.5]))

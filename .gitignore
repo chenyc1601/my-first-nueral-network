@@ -1,6 +1,15 @@
 # train/test datasets
 *.csv
 
+
+# VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

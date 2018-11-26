@@ -4,10 +4,10 @@ import numpy as np
 class Dataset :
     """从csv文件中读取数据，并转化成用于训练的内容
     """
-    dataList = []
     def __init__(self, dataPath) :
         """
         """
+        self.dataList = []
         # 从文件读取元数据
         dataFile = open(dataPath, 'r')
         metaDataList = dataFile.readlines()
