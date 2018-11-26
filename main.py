@@ -11,11 +11,11 @@ if __name__ == "__main__" :
 
     # 输入层，中间层和输出层的节点数
     inputNodes = 28 * 28  # 28*28像素  
-    hiddenNodes = 100
+    hiddenNodes = 200
     outputNodes = 10  # 0-9十个数字
 
     # 学习率
-    learningRate = 0.5
+    learningRate = 0.1
 
     # 读取和预处理数据集
     trainSet = Dataset(trainFilePath)
