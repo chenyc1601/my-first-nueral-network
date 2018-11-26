@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from neural-network import NeuralNetwork
+from input_dataset import
+from neural_network import NeuralNetwork
 
 if __name__ == "__main__" :
     # 
