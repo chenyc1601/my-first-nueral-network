@@ -35,12 +35,12 @@ class NeuralNetwork :
         return
 
     # train the neural network
-    def train(self, inputsList, targetsList) :
+    def train(self, aInput, aTarget) :
         """
         """
         # convert lists to 2d arrays
-        inputs = np.array(inputsList, ndmin=2).T
-        targets = np.array(targetsList, ndmin=2).T
+        inputs = np.array(aInput, ndmin=2).T
+        targets = np.array(aTarget, ndmin=2).T
 
         hiddenInputs = np.dot(self.w_I_H_n, inputs)
         hiddenOutputs = self.activation_function(hiddenInputs)
