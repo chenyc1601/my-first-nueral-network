@@ -11,7 +11,6 @@ class Dataset :
         dataFile = open(dataPath, 'r')
 
         # 数据预处理
-        dataCount = 0
         for data in dataFile.readlines() :
             dataValues = data.split(',')
             i = np.asfarray(dataValues[1:]) / 255.0 * 0.99 + 0.01
