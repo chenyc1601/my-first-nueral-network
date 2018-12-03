@@ -11,7 +11,7 @@ class Image :
         self.img = pImage.open(imgPath).convert('L')
         self.array = np.array(self.img)
         # 转为1*784
-        self.gray784 = self.array.reshape((1, 784))
+        self.gray784 = 255.0 - self.array.reshape((1, 784))
     
 if __name__ == "__main__" :
     img = Image("test_img/1.jpg")
