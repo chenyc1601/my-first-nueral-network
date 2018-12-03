@@ -35,7 +35,7 @@ class NeuralNetwork :
 
 
     def query(self, aInput) :
-        """输入一个数据，返回最终输出矩阵<ndarray>
+        """输入一个1*784矩阵，返回10*1矩阵<ndarray>
         """
         # convert inputs list to 2d array
         inputs = np.array(aInput, ndmin=2).T
@@ -73,12 +73,24 @@ class NeuralNetwork :
         return
 
 
-    def test(self, aInput, aTarget) :
-        """输入一个数据，返回计算结果和目标结果<int>
+    def test(self, inArray, tarArray) :
+        """输入输入矩阵和目标矩阵，返回计算结果和目标结果<int>
         """
-        finalOutputList = self.query(aInput).tolist()
-        ouDigi = finalOutputList.index(max(finalOutputList))
-        targetList = aTarget.tolist()
-        tarDigi = targetList.index(max(targetList))
-        
+        ouDigi = trans(self.query(inArray))
+        tarDigi = trans(tarArray)
         return [ouDigi, tarDigi]
+
+
+    def guess(self, inArray) :
+        """输入1*784输入矩阵，返回结果数字
+        """
+        ouDigi= trans(self.query(inArray))
+        return ouDigi
+
+
+def trans(ouArray) :
+    """将10*1结果矩阵转为对应的数字
+    """
+    ouList = ouArray.tolist()
+    ouDigi = ouList.index(max(ouList))
+    return ouDigi
