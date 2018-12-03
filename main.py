@@ -14,7 +14,7 @@ if __name__ == "__main__" :
 
     # 定义参数
     parser = argparse.ArgumentParser()
-    parser.add_argument("--imgFile", type=str, help="待识别的图片文件", default="test_img/0.png")
+    parser.add_argument("--imgFile", type=str, help="待识别的图片文件", default="test_img/0.jpg")
     parser.add_argument("--wIH", type=str, help="输入-隐藏权重矩阵文件")
     parser.add_argument("--wHO", type=str, help="隐藏-输出权重矩阵文件")
     args = parser.parse_args()
