@@ -8,11 +8,10 @@ class Image :
     """将图片处理为用于识别的数据
     """
     def __init__(self, imgPath) :
-        self.img = pImage.open(imgPath).convert('L')
-        self.array = np.array(self.img)
-        # 转为1*784
-        self.gray784 = 255.0 - self.array.reshape((1, 784))
+        img = pImage.open(imgPath).convert('L')  # 读灰度图
+        array = np.array(img)  # 转矩阵
+        array1_784 = array.reshape((1, 784))  # 转为1*784
+        self.array = 255.0 - array1_784  # 白底转黑底
     
 if __name__ == "__main__" :
-    img = Image("test_img/1.jpg")
-    img.img.save("test_img/xx.png")
+    pass
