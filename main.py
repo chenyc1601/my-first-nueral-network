@@ -75,6 +75,8 @@ if __name__ == "__main__" :
     print("测试集识别正确率：{0}".format(float(1 - errorCount / totalCount)))
 
     # 实际识别
-    testImg = Image(args.imgFile)
-    digi = n.guess(testImg.array)
-    print("图中数字为：{0}".format(digi))
+    ## testImg = Image(args.imgFile)
+    for i in range(10) :
+        testImg = Image("test_img/{0}.jpg".format(i))
+        digi = n.guess(testImg.array)
+        print("图{0}中数字为：{1}".format(i, digi))
