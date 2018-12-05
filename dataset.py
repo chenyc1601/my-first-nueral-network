@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
+
 import numpy as np
+import csv
 
 class Dataset :
     """从csv文件中读取数据，并转化成用于训练的内容
@@ -8,15 +10,16 @@ class Dataset :
         """
         """
         self.dataList = []
-        dataFile = open(dataPath, 'r')
 
         # 数据预处理
-        for data in dataFile.readlines() :
-            dataValues = data.split(',')
-            i = np.asfarray(dataValues[1:]) / 255.0 * 0.99 + 0.01
-            t = np.zeros(10) + 0.01
-            t[int(dataValues[0])] = 0.99
+        with open(dataPath, newline='') as csvfile :
+            reader = csv.reader(csvfile)
+            for row in reader :
+                i = np.asfarray(row[1:]) / 255.0 * 0.99 + 0.01
+                t = np.zeros(10) + 0.01
+                t[int(row[0])] = 0.99
+                self.dataList.append({'input': i, 'target': t})
 
-            self.dataList.append({'input': i, 'target': t})
-
-        dataFile.close()
+if __name__ == "__main__" :
+    dataset = Dataset("mnist_dataset/mnist_test_1-10.csv")
+    print(dataset.dataList)
