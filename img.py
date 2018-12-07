@@ -11,7 +11,10 @@ class Image :
         img = pImage.open(imgPath).convert('L')  # 读灰度图
         array = np.array(img)  # 转矩阵
         array1_784 = array.reshape((1, 784))  # 转为1*784
-        self.array = 255.0 - array1_784  # 白底转黑底
+        arrayInvert = 255.0 - array1_784  # 白底转黑底
+        self.imgData = np.asfarray(arrayInvert) / 255.0 * 0.99 + 0.01
     
 if __name__ == "__main__" :
-    pass
+    testImage = Image("test_img/0.jpg")
+    print(testImage.imgData)
+    

@@ -84,7 +84,9 @@ class NeuralNetwork :
     def guess(self, inArray) :
         """输入1*784输入矩阵，返回结果数字
         """
-        ouDigi= trans(self.query(inArray))
+        ouArray = self.query(inArray)
+        print(ouArray)  ##
+        ouDigi= trans(ouArray)
         return ouDigi
 
 

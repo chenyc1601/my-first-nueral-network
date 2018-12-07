@@ -12,7 +12,7 @@ if __name__ == "__main__" :
     # 定义输入参数
     parser = argparse.ArgumentParser()
     parser.add_argument("-i", "--imgFile", help="待识别的图片文件", default="test_img/0.jpg")
-    parser.add_argument("-w", "--weight", help="使用预存网络权重", action="store_true")
+    parser.add_argument("-t", "--train", help="重新训练网络", action="store_true")
     parser.add_argument("-e", "--echo", type=int, help="训练次数/世代", default=5)
     parser.add_argument("-n", "--node", type=int, help="中间层结点数", default=200)
     parser.add_argument("-r", "--rate", type=float, help="学习率", default=0.1)
@@ -38,7 +38,7 @@ if __name__ == "__main__" :
     print("网络初始化完成！")
 
     # 读取或训练网络
-    if args.weight :  # 读取
+    if args.train != True :  # 读取
         with open(weightInHid, 'rb') as handle :
             n.w_I_H_n = pk.load(handle)
         with open(weightHidOut, 'rb') as handle :
@@ -78,5 +78,5 @@ if __name__ == "__main__" :
     ## testImg = Image(args.imgFile)
     for i in range(10) :
         testImg = Image("test_img/{0}.jpg".format(i))
-        digi = n.guess(testImg.array)
+        digi = n.guess(testImg.imgData)
         print("图{0}中数字为：{1}".format(i, digi))
