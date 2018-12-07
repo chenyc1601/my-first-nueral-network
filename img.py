@@ -5,7 +5,7 @@ import PIL.Image as pImage
 import numpy as np
 
 class Image :
-    """将图片处理为用于识别的数据
+    """将28*28 jpg RGB图片处理为用于识别的数据
     """
     def __init__(self, imgPath) :
         img = pImage.open(imgPath).convert('L')  # 读灰度图
