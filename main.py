@@ -68,10 +68,10 @@ if __name__ == "__main__" :
         if result[0] != result[1] :  # 结果错误
             ## print(result)  # 显示结果
             errorCount += 1  # 记录错误
-            ## imageArray = data['input'].reshape((28, 28))  # 显示错误图像
-            ## plt.imshow(imageArray, cmap='Greys', interpolation='None')
-            ## plt.draw()
-            ## plt.pause(5)
+            imageArray = data['input'].reshape((28, 28))  # 显示错误图像
+            plt.imshow(imageArray, cmap='Greys', interpolation='None')
+            plt.draw()
+            plt.pause(5)
     print("测试集识别正确率：{0}".format(float(1 - errorCount / totalCount)))
 
     # 实际识别
