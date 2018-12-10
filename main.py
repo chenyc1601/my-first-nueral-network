@@ -13,7 +13,7 @@ if __name__ == "__main__" :
     parser = argparse.ArgumentParser()
     parser.add_argument("-i", "--imgFile", help="待识别的图片文件", default="test_img/0.jpg")
     parser.add_argument("-t", "--train", help="重新训练网络", action="store_true")
-    parser.add_argument("-e", "--echo", type=int, help="训练次数/世代", default=5)
+    parser.add_argument("-e", "--epoch", type=int, help="训练次数/世代", default=5)
     parser.add_argument("-r", "--rate", type=float, help="学习率", default=0.1)
     args = parser.parse_args()
 
@@ -41,14 +41,31 @@ if __name__ == "__main__" :
         with open(weight3, 'rb') as handle :
             n.w3 = pk.load(handle)
     else :  # 训练
-        print("读取训练集...")
+        print("读取数据集...")
         trainSet = Dataset(trainFilePath)
-        print("训练集读取完毕！")
-        for e in range(args.echo) :
+        testSet = Dataset(testFilePath)
+        print("数据集读取完毕！")
+        for e in range(args.epoch) :
             print("第{0}次训练开始...".format(e + 1))
             for data in trainSet.dataList :
                 n.train(data['input'], data['target'])
             print("第{0}次训练完成！".format(e + 1))
+
+            # 测试
+            errorCount = 0
+            totalCount = 0
+            for data in testSet.dataList :
+                totalCount += 1
+                result = n.test(data['input'], data['target'])
+                if result[0] != result[1] :  # 结果错误
+                    ## print(result)  # 显示结果
+                    errorCount += 1  # 记录错误
+                    ## imageArray = data['input'].reshape((28, 28))  # 显示错误图像
+                    ## plt.imshow(imageArray, cmap='Greys', interpolation='None')
+                    ## plt.draw()
+                    ## plt.pause(5)
+            print("测试集识别正确率：{0}".format(float(1 - errorCount / totalCount)))
+
         # 保存训练结果
         with open('w1.pickle', 'wb') as handle :
             pk.dump(n.w1, handle, protocol=pk.HIGHEST_PROTOCOL)
@@ -56,22 +73,6 @@ if __name__ == "__main__" :
             pk.dump(n.w2, handle, protocol=pk.HIGHEST_PROTOCOL)        
         with open('w3.pickle', 'wb') as handle :
             pk.dump(n.w3, handle, protocol=pk.HIGHEST_PROTOCOL)        
-
-    # 测试
-    testSet = Dataset(testFilePath)
-    errorCount = 0
-    totalCount = 0
-    for data in testSet.dataList :
-        totalCount += 1
-        result = n.test(data['input'], data['target'])
-        if result[0] != result[1] :  # 结果错误
-            ## print(result)  # 显示结果
-            errorCount += 1  # 记录错误
-            ## imageArray = data['input'].reshape((28, 28))  # 显示错误图像
-            ## plt.imshow(imageArray, cmap='Greys', interpolation='None')
-            ## plt.draw()
-            ## plt.pause(5)
-    print("测试集识别正确率：{0}".format(float(1 - errorCount / totalCount)))
 
     # 实际识别
     ## testImg = Image(args.imgFile)
