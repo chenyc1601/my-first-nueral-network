@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import matplotlib.image as mpimg
+import matplotlib.pyplot as plt
 import PIL.Image as pImage
 import numpy as np
 
@@ -15,6 +15,11 @@ class Image :
         self.imgData = np.asfarray(arrayInvert) / 255.0 * 0.99 + 0.01
     
 if __name__ == "__main__" :
-    testImage = Image("test_img/0.jpg")
-    print(testImage.imgData)
+    for i in range(10) :
+        testImage = Image("test_img/{0}.jpg".format(i))
+        ## print(testImage.imgData)
+        imageArray = testImage.imgData.reshape((28, 28))
+        plt.imshow(imageArray, cmap='Greys', interpolation='None')
+        plt.draw()
+        plt.pause(2)
     
