@@ -85,7 +85,7 @@ class NeuralNetwork :
         """输入1*784输入矩阵，返回结果数字
         """
         ouArray = self.query(inArray)
-        print(ouArray)  ##
+        ## print(ouArray)  ## 查看结果
         ouDigi= trans(ouArray)
         return ouDigi
 
