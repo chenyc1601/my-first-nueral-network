@@ -70,9 +70,9 @@ if __name__ == "__main__" :
         with open('w1.pickle', 'wb') as handle :
             pk.dump(n.w1, handle, protocol=pk.HIGHEST_PROTOCOL)
         with open('w2.pickle', 'wb') as handle :
-            pk.dump(n.w2, handle, protocol=pk.HIGHEST_PROTOCOL)        
+            pk.dump(n.w2, handle, protocol=pk.HIGHEST_PROTOCOL)
         with open('w3.pickle', 'wb') as handle :
-            pk.dump(n.w3, handle, protocol=pk.HIGHEST_PROTOCOL)        
+            pk.dump(n.w3, handle, protocol=pk.HIGHEST_PROTOCOL)
 
     # 实际识别
     ## testImg = Image(args.imgFile)
