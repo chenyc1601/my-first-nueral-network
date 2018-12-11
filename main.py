@@ -11,7 +11,7 @@ if __name__ == "__main__" :
 
     # 定义输入参数
     parser = argparse.ArgumentParser()
-    parser.add_argument("-i", "--imgFile", help="待识别的图片文件", default="test_img/0.jpg")
+    parser.add_argument("-i", "--imgFile", help="待识别的图片文件", default=None)
     parser.add_argument("-t", "--train", help="重新训练网络", action="store_true")
     parser.add_argument("-e", "--epoch", type=int, help="训练次数/世代", default=20)
     parser.add_argument("-n", "--node", type=int, help="中间层结点数", default=200)
@@ -43,6 +43,24 @@ if __name__ == "__main__" :
             n.w_I_H_n = pk.load(handle)
         with open(weightHidOut, 'rb') as handle :
             n.w_H_O_n = pk.load(handle)
+        print("已读取预存网络！")
+
+        # 测试
+        testSet = Dataset(testFilePath)
+        errorCount = 0
+        totalCount = 0
+        for data in testSet.dataList :
+            totalCount += 1
+            result = n.test(data['input'], data['target'])
+            if result[0] != result[1] :  # 结果错误
+                ## print(result)  # 显示结果
+                errorCount += 1  # 记录错误
+                ## imageArray = data['input'].reshape((28, 28))  # 显示错误图像
+                ## plt.imshow(imageArray, cmap='Greys', interpolation='None')
+                ## plt.draw()
+                ## plt.pause(5)
+        print("测试集识别正确率：{0}".format(float(1 - errorCount / totalCount)))
+
     else :  # 训练
         print("读取数据集...")
         trainSet = Dataset(trainFilePath)
@@ -77,8 +95,12 @@ if __name__ == "__main__" :
 
 
     # 实际识别
-    ## testImg = Image(args.imgFile)
-    for i in range(10) :
-        testImg = Image("test_img/{0}.jpg".format(i))
+    if args.imgFile :
+        testImg = Image(args.imgFile)
         digi = n.guess(testImg.imgData)
-        print("图{0}中数字为：{1}".format(i, digi))
+        print("图中数字为：{0}".format(digi))
+    else :
+        for i in range(10) :
+            testImg = Image("test_img/{0}.jpg".format(i))
+            digi = n.guess(testImg.imgData)
+            print("图{0}中数字为：{1}".format(i, digi))
