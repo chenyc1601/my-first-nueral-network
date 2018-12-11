@@ -1,6 +1,6 @@
 # train/test datasets
 *.csv
-test_img/
+test_img/*
 
 
 # macOS
