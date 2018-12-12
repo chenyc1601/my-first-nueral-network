@@ -13,7 +13,7 @@ if __name__ == "__main__" :
     parser = argparse.ArgumentParser()
     parser.add_argument("-i", "--imgFile", help="待识别的图片文件", default=None)
     parser.add_argument("-t", "--train", help="重新训练网络", action="store_true")
-    parser.add_argument("-e", "--epoch", type=int, help="训练次数/世代", default=20)
+    parser.add_argument("-e", "--epoch", type=int, help="训练次数/世代", default=10)
     parser.add_argument("-n", "--node", type=int, help="中间层结点数", default=200)
     parser.add_argument("-r", "--rate", type=float, help="学习率", default=0.01)
     args = parser.parse_args()
@@ -33,18 +33,11 @@ if __name__ == "__main__" :
     learningRate = args.rate
 
     # 初始化
-    print("网络初始化开始...")
-    n = NeuralNetwork(inputNodes, hiddenNodes, outputNodes, learningRate)
-    print("网络初始化完成！")
+    n = NeuralNetwork(args.train, inputNodes, hiddenNodes, outputNodes, learningRate)
 
     # 读取或训练网络
-    if args.train != True :  # 读取
-        with open(weightInHid, 'rb') as handle :
-            n.w_I_H_n = pk.load(handle)
-        with open(weightHidOut, 'rb') as handle :
-            n.w_H_O_n = pk.load(handle)
-        print("已读取预存网络！")
-
+    if args.train != True :  
+        # 读取部分移到nn包里了
         # 测试
         testSet = Dataset(testFilePath)
         errorCount = 0

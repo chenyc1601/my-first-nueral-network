@@ -2,13 +2,16 @@
 
 import numpy as np
 from scipy import special
+import pickle as pk
 
 # neural network class definition
 class NeuralNetwork :
 
-    def __init__(self, inputnodes, hiddennodes, outputnodes, learningrate) :
+    def __init__(self, trainOrNot, inputnodes, hiddennodes, outputnodes, learningrate) :
         """根据输入的参数初始化神经网络
         """
+        print("开始建立神经网络……")
+
         # 各层结点数
         self.inodes = inputnodes
         self.hnodes = hiddennodes
@@ -17,19 +20,32 @@ class NeuralNetwork :
         # 学习率
         self.lr = learningrate
 
-        # 链接权重矩阵
-        # 权重w_i_j是上层结点i到下层结点j的权重，即：
-        # w_1_1 w_2_1
-        # w_1_2 w_2_2 ...
-        ## weights randomly range from -0.5 to +0.5
-        ## self.w_I_H_r = np.random.rand(self.hnodes, self.inodes) - 0.5  
-        ## self.w_H_O_r = np.random.rand(self.onodes, self.hnodes) - 0.5
-        # weights 正态分布，均值为0，标准差为1/传入链接数目的开方
-        self.w_I_H_n = np.random.normal(0.0, pow(self.inodes, -0.5), (self.hnodes, self.inodes))
-        self.w_H_O_n = np.random.normal(0.0, pow(self.hnodes, -0.5), (self.onodes, self.hnodes))
-
         # 使用sigmoid函数作为结点的激发函数
         self.activation_function = lambda x: special.expit(x)
+
+        # 读取或初始化网络
+        if trainOrNot != True :  # 读取
+            weightInHid = "w_I_H.pickle"
+            weightHidOut = "w_H_O.pickle"
+            with open(weightInHid, 'rb') as handle :
+                self.w_I_H_n = pk.load(handle)
+            with open(weightHidOut, 'rb') as handle :
+                self.w_H_O_n = pk.load(handle)
+            print("已读取预存网络！")
+
+        else :  # 初始化
+            # 链接权重矩阵
+            # 权重w_i_j是上层结点i到下层结点j的权重，即：
+            # w_1_1 w_2_1
+            # w_1_2 w_2_2 ...
+            ## weights randomly range from -0.5 to +0.5
+            ## self.w_I_H_r = np.random.rand(self.hnodes, self.inodes) - 0.5  
+            ## self.w_H_O_r = np.random.rand(self.onodes, self.hnodes) - 0.5
+            # weights 正态分布，均值为0，标准差为1/传入链接数目的开方
+            self.w_I_H_n = np.random.normal(0.0, pow(self.inodes, -0.5), (self.hnodes, self.inodes))
+            self.w_H_O_n = np.random.normal(0.0, pow(self.hnodes, -0.5), (self.onodes, self.hnodes))
+
+            print("网络初始化完毕！")
 
         return
 
